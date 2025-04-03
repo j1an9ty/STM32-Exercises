@@ -1,0 +1,9 @@
+h743_1\portserial_m.o: ..\FreeModbus\port\FreeRTOS\portserial_m.c
+h743_1\portserial_m.o: ..\FreeModbus\port\port.h
+h743_1\portserial_m.o: ..\FreeModbus\modbus\include\mbconfig.h
+h743_1\portserial_m.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
+h743_1\portserial_m.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\inttypes.h
+h743_1\portserial_m.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+h743_1\portserial_m.o: ..\FreeModbus\modbus\include\mb.h
+h743_1\portserial_m.o: ..\FreeModbus\modbus\include\mbport.h
+h743_1\portserial_m.o: ..\FreeModbus\modbus\include\mbproto.h
