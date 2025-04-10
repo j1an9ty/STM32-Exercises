@@ -65,9 +65,11 @@ void vMBMasterPortTimersT35Enable()
     rt_timer_start(&timer);
 }
 
+/*! \brief If master send a broadcast frame,the master will wait time of convert to delay,
+ * then master can send other frame */
 void vMBMasterPortTimersConvertDelayEnable()
 {
-    rt_tick_t timer_tick = MB_MASTER_DELAY_MS_CONVERT * RT_TICK_PER_SECOND / 1000;
+    rt_tick_t timer_tick = MB_MASTER_DELAY_MS_CONVERT * RT_TICK_PER_SECOND / 1000; //每毫秒tick数=RT_TICK_PER_SECOND / 1000;
 
     /* Set current timer mode, don't change it.*/
     vMBMasterSetCurTimerMode(MB_TMODE_CONVERT_DELAY);
