@@ -151,7 +151,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
     /* UART8 interrupt Init */
-    HAL_NVIC_SetPriority(UART8_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(UART8_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(UART8_IRQn);
   /* USER CODE BEGIN UART8_MspInit 1 */
 
@@ -188,7 +188,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
     /* USART3 interrupt Init */
-    HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(USART3_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(USART3_IRQn);
   /* USER CODE BEGIN USART3_MspInit 1 */
 
