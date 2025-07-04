@@ -560,11 +560,11 @@ ork --depend=..\mdk_output\startup_stm32f103xe.d -o..\mdk_output\startup_stm32f
 1xx_HAL_Driver/Inc/Legacy -I../Middlewares/Third_Party/FreeRTOS/Source/include 
 -I../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I../Middlewares/Thi
 rd_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I../Drivers/CMSIS/Device/ST/STM
-32F1xx/Include -I../Drivers/CMSIS/Include -I.\RTE\_103_0 -IC:\Users\chtie\AppDa
-ta\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include -IC:\Users\chtie\AppData\
-Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include --predefine="__UVISION_
-VERSION SETA 533" --predefine="_RTE_ SETA 1" --predefine="STM32F10X_HD SETA 1" 
---predefine="_RTE_ SETA 1" --list=startup_stm32f103xe.lst startup_stm32f103xe.s
+32F1xx/Include -I../Drivers/CMSIS/Include -I.\RTE\_103_0 -IF:\Keil_v5\ARM\PACK\
+ARM\CMSIS\5.7.0\CMSIS\Core\Include -IF:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3
+.0\Device\Include --predefine="__UVISION_VERSION SETA 533" --predefine="_RTE_ S
+ETA 1" --predefine="STM32F10X_HD SETA 1" --predefine="_RTE_ SETA 1" --list=star
+tup_stm32f103xe.lst startup_stm32f103xe.s
 
 
 
