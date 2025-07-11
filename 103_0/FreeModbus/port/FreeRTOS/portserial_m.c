@@ -7,31 +7,31 @@
 
 #if MB_MASTER_RTU_ENABLED > 0 || MB_MASTER_ASCII_ENABLED > 0
 /* ----------------------- Static variables ---------------------------------*/
-static volatile uint8_t rx_buff[FIFO_SIZE_MAX];
-static Serial_fifo Master_serial_rx_fifo;
+static volatile uint8_t rx_buff[FIFO_SIZE_MAX];											//接收缓冲区
+static Serial_fifo Master_serial_rx_fifo;														//主机接收缓冲句柄
 /* software simulation serial transmit IRQ handler thread stack */
 /* software simulation serial transmit IRQ handler thread */
 //static TaskHandle_t thread_serial_soft_trans_irq = NULL;
 /* serial event */
-static EventGroupHandle_t event_serial = NULL;
+static EventGroupHandle_t event_serial = NULL;											//串口事件组句柄
 /* modbus master serial device */
-static UART_HandleTypeDef *serial;
+static UART_HandleTypeDef *serial;																	//串口句柄
 
 /* ----------------------- Defines ------------------------------------------*/
 /* serial transmit event */
 #define EVENT_SERIAL_TRANS_START    (1<<0)
 
 /* ----------------------- static functions ---------------------------------*/
-static void prvvUARTTxReadyISR(void);
-static void prvvUARTRxISR(void);
-static void serial_soft_trans_irq(void *parameter);
+static void prvvUARTTxReadyISR(void);																//发送就绪接口
+static void prvvUARTRxISR(void);																		//接收中断接口
+static void serial_soft_trans_irq(void *parameter);									//软模拟发送中断
 //static void Master_TxCpltCallback(struct __UART_HandleTypeDef *huart);
-void Master_RxCpltCallback(struct __UART_HandleTypeDef *huart);
-static int stm32_getc(void);
-static int stm32_putc(CHAR c);
+void Master_RxCpltCallback(struct __UART_HandleTypeDef *huart);			//接收完成回调
+static int stm32_getc(void);																				//接收字节
+static int stm32_putc(CHAR c);																			//发送字节
 
 /* ----------------------- Start implementation -----------------------------*/
-BOOL xMBMasterPortSerialInit(UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits,
+BOOL xMBMasterPortSerialInit(UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits,	//串口初始化接口
         eMBParity eParity)
 {
     /**
@@ -40,7 +40,7 @@ BOOL xMBMasterPortSerialInit(UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits,
      */
 
     /* set serial name */
-  if (ucPORT == 1) 
+  if (ucPORT == 1) 																										//使用串口1
   {
 #if defined(USING_UART1)
     extern UART_HandleTypeDef huart1;
@@ -48,7 +48,7 @@ BOOL xMBMasterPortSerialInit(UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits,
 //    //printf("Master using uart1!\r\n");
 #endif
   } 
-  else if (ucPORT == 2) 
+  else if (ucPORT == 2)  																							//使用串口2
   {
 #if defined(USING_UART2)
     extern UART_HandleTypeDef huart2;
@@ -56,7 +56,7 @@ BOOL xMBMasterPortSerialInit(UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits,
 //    //printf("Master using uart2!\r\n");
 #endif
   }
-   else if (ucPORT == 3) 
+   else if (ucPORT == 3)  																						//使用串口3
    {
 #if defined(USING_UART3)
     extern UART_HandleTypeDef huart3;
@@ -84,21 +84,21 @@ BOOL xMBMasterPortSerialInit(UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits,
         break;
     }
     }
-	if (HAL_UART_Init(serial) != HAL_OK) 
+	if (HAL_UART_Init(serial) != HAL_OK) 														//初始化串口
 	{
 		Error_Handler();
 	}
-	__HAL_UART_DISABLE_IT(serial, UART_IT_RXNE);
+	__HAL_UART_DISABLE_IT(serial, UART_IT_RXNE);										//关中断
 	__HAL_UART_DISABLE_IT(serial, UART_IT_TC);
 	/*registe recieve callback*/
 //	HAL_UART_RegisterCallback(serial, HAL_UART_RX_COMPLETE_CB_ID, Master_RxCpltCallback);
 	/* software initialize */
-	Master_serial_rx_fifo.buffer = rx_buff;
+	Master_serial_rx_fifo.buffer = rx_buff;													//初始化缓冲区句柄
 	Master_serial_rx_fifo.get_index = 0;
 	Master_serial_rx_fifo.put_index = 0;
 	/* software initialize */
 
-	/* 创建串口事件组 */
+																																	/* 创建串口事件组 */
 	event_serial = xEventGroupCreate();
 	if (NULL != event_serial)
 	{
@@ -109,8 +109,8 @@ BOOL xMBMasterPortSerialInit(UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits,
 			//printf("主任务创建串口事件组失败!\r\n");
 	}
 
-	/* 创建串口软传输中断处理任务 */
-	BaseType_t xReturn = pdPASS;
+	/* 创建串口软传输中断处理任务 */																
+	BaseType_t xReturn = pdPASS;																		//创建模拟发送中断任务serial_soft_trans_irq
 	xReturn = xTaskCreate((TaskFunction_t)serial_soft_trans_irq, /* 任务入口函数 */
 												(const char *)"master trans",          /* 任务名称 */
 												(uint16_t)128,                         /* 任务堆栈大小 */
@@ -137,7 +137,7 @@ BOOL xMBMasterPortSerialInit(UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits,
  *   xRxEnable - 是否启用接收中断
  *   xTxEnable - 是否启用发送功能
  */
-void vMBMasterPortSerialEnable(BOOL xRxEnable, BOOL xTxEnable)
+void vMBMasterPortSerialEnable(BOOL xRxEnable, BOOL xTxEnable)			//启用或禁用接收和发送
 {
     /* 清除接收和发送标志位，确保状态机初始状态一致 */
     __HAL_UART_CLEAR_FLAG(serial, UART_FLAG_RXNE);
@@ -146,40 +146,40 @@ void vMBMasterPortSerialEnable(BOOL xRxEnable, BOOL xTxEnable)
     if (xRxEnable == pdTRUE) 
     {
         /* 启用串口接收中断 */
-        __HAL_UART_ENABLE_IT(serial, UART_IT_RXNE);
+        __HAL_UART_ENABLE_IT(serial, UART_IT_RXNE);									//启用接收中断
     } 
     else 
     {
         /* 禁用串口接收中断 */
-        __HAL_UART_DISABLE_IT(serial, UART_IT_RXNE);
+        __HAL_UART_DISABLE_IT(serial, UART_IT_RXNE);								//禁用接收中断
     }
     
     if (xTxEnable == pdTRUE)
     {
         /* 触发串口发送事件，启动数据传输 */
-        xEventGroupSetBits(event_serial, EVENT_SERIAL_TRANS_START);
+				xEventGroupSetBits(event_serial, EVENT_SERIAL_TRANS_START);	//标记发送开始
     }
     else
     {
         /* 清除发送事件标志，停止数据传输 */
-        xEventGroupClearBits(event_serial, EVENT_SERIAL_TRANS_START);
+        xEventGroupClearBits(event_serial, EVENT_SERIAL_TRANS_START);//清除标记
     }
 }
 
-void vMBMasterPortClose(void)
+void vMBMasterPortClose(void)	
 {
-	__HAL_UART_DISABLE(serial);
+	__HAL_UART_DISABLE(serial);																					//禁用串口外设
 }
 
-BOOL xMBMasterPortSerialPutByte(CHAR ucByte)
+BOOL xMBMasterPortSerialPutByte(CHAR ucByte)													//发送字节
 {
     stm32_putc(ucByte);
     return TRUE;
 }
 
-BOOL xMBMasterPortSerialGetByte(CHAR * pucByte)
+BOOL xMBMasterPortSerialGetByte(CHAR * pucByte)												//接收字节
 {
-    Get_from_fifo(&Master_serial_rx_fifo, (uint8_t *)pucByte, 1);
+    Get_from_fifo(&Master_serial_rx_fifo, (uint8_t *)pucByte, 1);			//Master_serial_rx_fifo中读取1个字节到pucByte
     return TRUE;
 }
 
@@ -211,7 +211,7 @@ void prvvUARTRxISR(void)
  *
  * @param parameter 任务参数
  */
-static void serial_soft_trans_irq(void* parameter) {
+static void serial_soft_trans_irq(void* parameter) {											//模拟发送中断
     while (1) 
     {
         /* 等待串口发送启动事件 */
@@ -221,8 +221,8 @@ static void serial_soft_trans_irq(void* parameter) {
                             pdFALSE,        /* 任意一个事件位被设置即可唤醒 */
                             portMAX_DELAY); /* 无限等待，直到事件发生 */
         
-        /* 事件发生后，执行Modbus发送回调函数 */
-        prvvUARTTxReadyISR();
+        /* 事件发生后，执行Modbus发送回调函数 */													//获得标记后发送
+			prvvUARTTxReadyISR();
     }
 }
 
@@ -231,11 +231,19 @@ static void serial_soft_trans_irq(void* parameter) {
  * @param  huart  Pointer to a UART_HandleTypeDef structure that contains
  *                the configuration information for the specified UART module.
  * @retval None
+
+UART硬件接收到数据 → 触发接收中断 →
+HAL库中断处理函数 → Master_RxCpltCallback() →
+  ├─ 循环读取所有可用字节 → 存入Master_serial_rx_fifo
+  └─ 调用prvvUARTRxISR() →
+      └─ 调用pxMBMasterFrameCBByteReceived() →
+          └─ 协议栈通过xMBPortSerialGetByte()读取数据
+
  */
 void Master_RxCpltCallback(struct __UART_HandleTypeDef *huart) 
 {
 	int ch = -1;
-	/*UART RX·????D??μ÷ó?￡?2￠??è?ò???êy?Y*/
+	
 	while (1) 
 	{
 		ch = stm32_getc();
@@ -247,14 +255,14 @@ void Master_RxCpltCallback(struct __UART_HandleTypeDef *huart)
 	}
 	prvvUARTRxISR();
 }
-/*UART·￠?íò???êy?Y*/
+
 static int stm32_putc(CHAR c) 
 {
 	serial->Instance->DR = c;
 	while (!(serial->Instance->SR & UART_FLAG_TC));
 	return TRUE;
 }
-/*UART?óê?ò???êy?Y*/
+
 static int stm32_getc(void) 
 {
 	int ch;
