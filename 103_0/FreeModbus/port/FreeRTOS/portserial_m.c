@@ -1,3 +1,4 @@
+#include "lwrb.h"
 #include "port.h"
 
 /* ----------------------- Modbus includes ----------------------------------*/
@@ -8,7 +9,7 @@
 #if MB_MASTER_RTU_ENABLED > 0 || MB_MASTER_ASCII_ENABLED > 0
 /* ----------------------- Static variables ---------------------------------*/
 static volatile uint8_t rx_buff[FIFO_SIZE_MAX];											//接收缓冲区
-static Serial_fifo Master_serial_rx_fifo;														//主机接收缓冲句柄
+static lwrb_t Master_serial_rx_fifo;														//主机接收缓冲句柄
 /* software simulation serial transmit IRQ handler thread stack */
 /* software simulation serial transmit IRQ handler thread */
 //static TaskHandle_t thread_serial_soft_trans_irq = NULL;
