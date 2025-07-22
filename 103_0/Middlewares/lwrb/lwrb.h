@@ -48,6 +48,7 @@ extern "C" {
  * \{
  */
 
+#define LWRB_DISABLE_ATOMIC
 #if !defined(LWRB_DISABLE_ATOMIC) || __DOXYGEN__
 #include <stdatomic.h>
 

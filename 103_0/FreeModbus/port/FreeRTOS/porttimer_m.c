@@ -28,6 +28,42 @@
 #include "mbport.h"
 
 #if MB_MASTER_RTU_ENABLED > 0 || MB_MASTER_ASCII_ENABLED > 0
+/* ----------------------- Variables ----------------------------------------*/
+static USHORT usT35TimeOut50us;          													 // T35超时计时器的计数值（单位：50微秒）
+static TimerHandle_t timer = NULL;        												 // FreeRTOS软件定时器句柄
+static void prvvTIMERExpiredISR(void);    												 // 定时器硬件中断服务函数（ISR）
+static void timer_timeout_ind(TimerHandle_t xTimer); 							 // 定时器超时回调函数（任务上下文）
+static BaseType_t  pxHigherPriorityTaskWoken;  										 // 用于ISR中标记是否需要任务切换的标志
+
+/* ----------------------- static functions ---------------------------------*/
+static void prvvTIMERExpiredISR(void);														 //定时器到期硬件中断服务函数
+
+/* ----------------------- Start implementation -----------------------------*/
+BOOL xMBMasterPortTimersInit(USHORT usTimeOut50us)
+{
+    /* backup T35 ticks */
+    usT35TimeOut50us = usTimeOut50us;
+
+	timer = xTimerCreate("Master timer",			//创建Modbus主站定时器																							 
+											 (50*usT35TimeOut50us) / (1000 * 1000 / configTICK_RATE_HZ) + 1, 	// 计算超时总微秒数，转换为系统节拍数
+																																												/* 50*usTimeOut50us：将50微秒单位转换为总微秒数
+																																												 * 1000*1000/configTICK_RATE_HZ：每个系统节拍的微秒数 */
+											  pdFALSE,						//单次触发模式（非周期）																								
+											 (void *)1,						//定时器ID（可在回调中识别）
+											 timer_timeout_ind);  // 超时回调函数
+	if (timer != NULL) 												//若创建定时器非空（检查定时器创建是否成功 ）
+	{
+		//printf("Create Master Timer Success!\r\n");
+		return TRUE;
+	} 
+	else 
+	{
+		//printf("Create Master Timer Faild!\r\n");
+		return FALSE;
+	}
+}
+
+
 #if 0
 /* ----------------------- Variables ----------------------------------------*/
 static USHORT usT35TimeOut50us;

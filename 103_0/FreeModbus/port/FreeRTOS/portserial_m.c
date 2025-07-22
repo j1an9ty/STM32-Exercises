@@ -8,7 +8,7 @@
 
 #if MB_MASTER_RTU_ENABLED > 0 || MB_MASTER_ASCII_ENABLED > 0
 /* ----------------------- Static variables ---------------------------------*/
-static volatile uint8_t rx_buff[FIFO_SIZE_MAX];											//接收缓冲区
+static volatile uint8_t rx_buff[256];											//接收缓冲区
 static lwrb_t Master_serial_rx_fifo;														//主机接收缓冲句柄
 /* software simulation serial transmit IRQ handler thread stack */
 /* software simulation serial transmit IRQ handler thread */
@@ -94,9 +94,8 @@ BOOL xMBMasterPortSerialInit(UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits,	/
 	/*registe recieve callback*/
 //	HAL_UART_RegisterCallback(serial, HAL_UART_RX_COMPLETE_CB_ID, Master_RxCpltCallback);
 	/* software initialize */
-	Master_serial_rx_fifo.buffer = rx_buff;													//初始化缓冲区句柄
-	Master_serial_rx_fifo.get_index = 0;
-	Master_serial_rx_fifo.put_index = 0;
+	lwrb_init(Master_serial_rx_fifo,rx_buff,sizeof(rx_buff));				//初始化缓冲区句柄
+
 	/* software initialize */
 
 																																	/* 创建串口事件组 */
@@ -180,7 +179,7 @@ BOOL xMBMasterPortSerialPutByte(CHAR ucByte)													//发送字节
 
 BOOL xMBMasterPortSerialGetByte(CHAR * pucByte)												//接收字节
 {
-    Get_from_fifo(&Master_serial_rx_fifo, (uint8_t *)pucByte, 1);			//Master_serial_rx_fifo中读取1个字节到pucByte
+    lwrb_read(&Master_serial_rx_fifo, (uint8_t *)pucByte, 1);			//Master_serial_rx_fifo中读取1个字节到pucByte
     return TRUE;
 }
 
@@ -252,7 +251,7 @@ void Master_RxCpltCallback(struct __UART_HandleTypeDef *huart)
 		{
 			break;
 		}
-		Put_in_fifo(&Master_serial_rx_fifo, (uint8_t *)&ch, 1);
+		lwrb_write(&Master_serial_rx_fifo, (uint8_t *)&ch, 1);
 	}
 	prvvUARTRxISR();
 }
