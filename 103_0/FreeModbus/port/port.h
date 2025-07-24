@@ -22,13 +22,23 @@
 #ifndef _PORT_H
 #define _PORT_H
 
-#include <stm32f10x_conf.h>
+#include "FreeRTOS.h"
+#include "cmsis_os.h"
+#include "cmsis_os2.h"
+#include "event_groups.h"
+#include "main.h"
+#include "usart.h"
 #include "mbconfig.h"
-#include <rthw.h>
-#include <rtthread.h>
-
+#include "mbproto.h"
+#include "semphr.h"
+#include "task.h"
+#include "timers.h"
 #include <assert.h>
 #include <inttypes.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include "stm32f1xx_hal.h"
 
 #define INLINE
 #define PR_BEGIN_EXTERN_C           extern "C" {
@@ -36,6 +46,16 @@
 
 #define ENTER_CRITICAL_SECTION()    EnterCriticalSection()
 #define EXIT_CRITICAL_SECTION()    ExitCriticalSection()
+
+  /* 使用了lwrb，可能不需要 _serial_fifo*/
+typedef struct _serial_fifo
+{
+  /* software fifo */
+  volatile uint8_t *buffer;     // 指向缓冲区的指针（存储实际数据）
+  volatile uint16_t put_index;  // 写指针：指向下一个写入位置
+  volatile uint16_t get_index;  // 读指针：指向下一个读取位置
+} Serial_fifo;
+#define FIFO_SIZE_MAX 265
 
 typedef uint8_t BOOL;
 
@@ -58,5 +78,11 @@ typedef int32_t LONG;
 
 void EnterCriticalSection(void);
 void ExitCriticalSection(void);
+  
+/* 使用了lwrb，可能不需要以下两条 */
+void Put_in_fifo(Serial_fifo *buff, uint8_t *putdata, int length);
+int Get_from_fifo(Serial_fifo *buff, uint8_t *getdata, int length);
+
+extern __inline bool IS_IRQ(void); //bool报错
 
 #endif

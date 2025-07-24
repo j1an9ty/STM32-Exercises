@@ -8,7 +8,7 @@
 
 #if MB_MASTER_RTU_ENABLED > 0 || MB_MASTER_ASCII_ENABLED > 0
 /* ----------------------- Static variables ---------------------------------*/
-static volatile uint8_t rx_buff[256];											//接收缓冲区
+static volatile uint8_t rx_buff[FIFO_SIZE_MAX];											//接收缓冲区
 static lwrb_t Master_serial_rx_fifo;														//主机接收缓冲句柄
 /* software simulation serial transmit IRQ handler thread stack */
 /* software simulation serial transmit IRQ handler thread */

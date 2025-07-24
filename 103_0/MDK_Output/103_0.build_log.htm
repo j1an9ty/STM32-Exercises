@@ -22,105 +22,257 @@ Dialog DLL:      TCM.DLL V1.48.0.0
  
 <h2>Project:</h2>
 F:\MCU\SRC\STM32-Exercises\103_0\MDK-ARM\103_0.uvprojx
-Project File Date:  07/14/2025
+Project File Date:  07/24/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'F:\Keil_v5\ARM\ARMCC\Bin'
 Build target '103_0'
 Note: source file '..\FreeModbus\port\FreeRTOS\port.c' - object file renamed from '..\MDK_Output\port.o' to '..\MDK_Output\port_1.o'.
-compiling mbcrc.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\rtu\mbcrc.c: 0 warnings, 1 error
-compiling port.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\port\FreeRTOS\port.c: 0 warnings, 1 error
-compiling mbfunccoils_m.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\functions\mbfunccoils_m.c: 0 warnings, 1 error
-compiling mbrtu.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\rtu\mbrtu.c: 0 warnings, 1 error
-compiling mbfunccoils.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\functions\mbfunccoils.c: 0 warnings, 1 error
-compiling mbrtu_m.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\rtu\mbrtu_m.c: 0 warnings, 1 error
-compiling mb.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\mb.c: 0 warnings, 1 error
 compiling user_mb_app.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\port\user_mb_app.c: 0 warnings, 1 error
-compiling user_mb_app_m.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\port\user_mb_app_m.c: 0 warnings, 1 error
-compiling mbfuncdisc_m.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\functions\mbfuncdisc_m.c: 0 warnings, 1 error
-compiling mb_m.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\mb_m.c: 0 warnings, 1 error
-compiling mbfuncdisc.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\functions\mbfuncdisc.c: 0 warnings, 1 error
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\port\user_mb_app.c: 0 warnings, 3 errors
 compiling porttimer_m.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\port\FreeRTOS\porttimer_m.c: 0 warnings, 1 error
-compiling portserial_m.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\port\FreeRTOS\portserial_m.c: 0 warnings, 1 error
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\port\FreeRTOS\porttimer_m.c(150): error:  #20: identifier "timer" is undefined
+  		xTimerStopFromISR((TimerHandle_t)timer, 0);
+..\FreeModbus\port\FreeRTOS\porttimer_m.c(154): error:  #20: identifier "timer" is undefined
+  		xTimerStop((TimerHandle_t)timer, 0);
+..\FreeModbus\port\FreeRTOS\porttimer_m.c(163): error:  #147-D: declaration is incompatible with "void timer_timeout_ind(TimerHandle_t)"  (declared at line 35)
+  static void timer_timeout_ind(void* parameter)
+..\FreeModbus\port\FreeRTOS\porttimer_m.c: 0 warnings, 6 errors
+compiling mbcrc.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\rtu\mbcrc.c: 0 warnings, 3 errors
+compiling port.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\port\FreeRTOS\port.c(97): warning:  #14-D: extra text after expected end of preprocessing directive
+  #ifndef IS_IRQ()
+..\FreeModbus\port\FreeRTOS\port.c: 1 warning, 3 errors
+compiling mbfunccoils_m.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\functions\mbfunccoils_m.c: 0 warnings, 3 errors
+compiling mbfuncdisc_m.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\functions\mbfuncdisc_m.c: 0 warnings, 3 errors
+compiling mbfunccoils.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\functions\mbfunccoils.c: 0 warnings, 3 errors
+compiling mb_m.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\mb_m.c: 0 warnings, 3 errors
 compiling portevent_m.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\port\FreeRTOS\portevent_m.c: 0 warnings, 1 error
-compiling mbfuncholding.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\functions\mbfuncholding.c: 0 warnings, 1 error
-compiling mbfuncholding_m.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\functions\mbfuncholding_m.c: 0 warnings, 1 error
-compiling mbfuncinput.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\functions\mbfuncinput.c: 0 warnings, 1 error
-compiling mbfuncinput_m.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\functions\mbfuncinput_m.c: 0 warnings, 1 error
-compiling mbfuncother.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\functions\mbfuncother.c: 0 warnings, 1 error
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\port\FreeRTOS\portevent_m.c(37): warning:  #223-D: function "rt_event_init" declared implicitly
+      rt_event_init(&xMasterOsEvent,"master event",RT_IPC_FLAG_PRIO);
+..\FreeModbus\port\FreeRTOS\portevent_m.c(37): error:  #20: identifier "RT_IPC_FLAG_PRIO" is undefined
+      rt_event_init(&xMasterOsEvent,"master event",RT_IPC_FLAG_PRIO);
+..\FreeModbus\port\FreeRTOS\portevent_m.c(44): warning:  #223-D: function "rt_event_send" declared implicitly
+      rt_event_send(&xMasterOsEvent, eEvent);
+..\FreeModbus\port\FreeRTOS\portevent_m.c(51): error:  #20: identifier "rt_uint32_t" is undefined
+      rt_uint32_t recvedEvent;
+..\FreeModbus\port\FreeRTOS\portevent_m.c(53): warning:  #223-D: function "rt_event_recv" declared implicitly
+      rt_event_recv(&xMasterOsEvent,
+..\FreeModbus\port\FreeRTOS\portevent_m.c(56): error:  #20: identifier "RT_EVENT_FLAG_OR" is undefined
+              RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER,
+..\FreeModbus\port\FreeRTOS\portevent_m.c(56): error:  #20: identifier "RT_EVENT_FLAG_CLEAR" is undefined
+              RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER,
+..\FreeModbus\port\FreeRTOS\portevent_m.c(56): error:  #20: identifier "RT_WAITING_FOREVER" is undefined
+              RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER,
+..\FreeModbus\port\FreeRTOS\portevent_m.c(86): warning:  #223-D: function "rt_sem_init" declared implicitly
+      rt_sem_init(&xMasterRunRes, "master res", 0x01 , RT_IPC_FLAG_PRIO);
+..\FreeModbus\port\FreeRTOS\portevent_m.c(86): error:  #20: identifier "RT_IPC_FLAG_PRIO" is undefined
+      rt_sem_init(&xMasterRunRes, "master res", 0x01 , RT_IPC_FLAG_PRIO);
+..\FreeModbus\port\FreeRTOS\portevent_m.c(100): warning:  #223-D: function "rt_sem_take" declared implicitly
+      return rt_sem_take(&xMasterRunRes, lTimeOut) ? FALSE : TRUE ;
+..\FreeModbus\port\FreeRTOS\portevent_m.c(111): warning:  #223-D: function "rt_sem_release" declared implicitly
+      rt_sem_release(&xMasterRunRes);
+..\FreeModbus\port\FreeRTOS\portevent_m.c(130): warning:  #223-D: function "rt_event_send" declared implicitly
+      rt_event_send(&xMasterOsEvent, EV_MASTER_ERROR_RESPOND_TIMEOUT);
+..\FreeModbus\port\FreeRTOS\portevent_m.c(152): warning:  #223-D: function "rt_event_send" declared implicitly
+      rt_event_send(&xMasterOsEvent, EV_MASTER_ERROR_RECEIVE_DATA);
+..\FreeModbus\port\FreeRTOS\portevent_m.c(174): warning:  #223-D: function "rt_event_send" declared implicitly
+      rt_event_send(&xMasterOsEvent, EV_MASTER_ERROR_EXECUTE_FUNCTION);
+..\FreeModbus\port\FreeRTOS\portevent_m.c(191): warning:  #223-D: function "rt_event_send" declared implicitly
+      rt_event_send(&xMasterOsEvent, EV_MASTER_PROCESS_SUCESS);
+..\FreeModbus\port\FreeRTOS\portevent_m.c(208): error:  #20: identifier "rt_uint32_t" is undefined
+      rt_uint32_t recvedEvent;
+..\FreeModbus\port\FreeRTOS\portevent_m.c(210): warning:  #223-D: function "rt_event_recv" declared implicitly
+      rt_event_recv(&xMasterOsEvent,
+..\FreeModbus\port\FreeRTOS\portevent_m.c(214): error:  #20: identifier "RT_EVENT_FLAG_OR" is undefined
+              RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER,
+..\FreeModbus\port\FreeRTOS\portevent_m.c(214): error:  #20: identifier "RT_EVENT_FLAG_CLEAR" is undefined
+              RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER,
+..\FreeModbus\port\FreeRTOS\portevent_m.c(214): error:  #20: identifier "RT_WAITING_FOREVER" is undefined
+              RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER,
+..\FreeModbus\port\FreeRTOS\portevent_m.c(31): error:  #235: variable "xMasterRunRes" was declared with a never-completed type
+  static struct rt_semaphore xMasterRunRes;
+..\FreeModbus\port\FreeRTOS\portevent_m.c(32): error:  #235: variable "xMasterOsEvent" was declared with a never-completed type
+  static struct rt_event     xMasterOsEvent;
+..\FreeModbus\port\FreeRTOS\portevent_m.c: 11 warnings, 15 errors
+compiling mbfuncdisc.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\functions\mbfuncdisc.c: 0 warnings, 3 errors
+compiling user_mb_app_m.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\port\user_mb_app_m.c: 0 warnings, 3 errors
+compiling mbrtu_m.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\rtu\mbrtu_m.c: 0 warnings, 3 errors
+compiling mbrtu.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\rtu\mbrtu.c: 0 warnings, 3 errors
+compiling mb.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\mb.c(64): warning:  #550-D: variable "eMBCurrentMode"  was set but never used
+  static eMBMode  eMBCurrentMode;
+..\FreeModbus\modbus\mb.c: 1 warning, 3 errors
+compiling portserial_m.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\port\FreeRTOS\portserial_m.c(97): error:  #167: argument of type "lwrb_t" is incompatible with parameter of type "lwrb_t *"
+  	lwrb_init(Master_serial_rx_fifo,rx_buff,sizeof(rx_buff));				//³õÊ¼»¯»º³åÇø¾ä±ú
+..\FreeModbus\port\FreeRTOS\portserial_m.c(97): warning:  #167-D: argument of type "volatile uint8_t *" is incompatible with parameter of type "void *"
+  	lwrb_init(Master_serial_rx_fifo,rx_buff,sizeof(rx_buff));				//³õÊ¼»¯»º³åÇø¾ä±ú
+..\FreeModbus\port\FreeRTOS\portserial_m.c: 1 warning, 4 errors
 compiling mbutils.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\functions\mbutils.c: 0 warnings, 1 error
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\functions\mbutils.c: 0 warnings, 3 errors
+compiling mbfuncholding.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\functions\mbfuncholding.c: 0 warnings, 3 errors
+compiling mbfuncinput_m.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\functions\mbfuncinput_m.c: 0 warnings, 3 errors
+compiling mbfuncinput.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\functions\mbfuncinput.c: 0 warnings, 3 errors
 compiling mbtcp.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\tcp\mbtcp.c: 0 warnings, 1 error
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\tcp\mbtcp.c: 0 warnings, 3 errors
+compiling mbfuncother.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\functions\mbfuncother.c: 0 warnings, 3 errors
+compiling mbfuncholding_m.c...
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\functions\mbfuncholding_m.c: 0 warnings, 3 errors
 compiling mbascii.c...
-..\FreeModbus\port\port.h(25): error:  #5: cannot open source input file "stm32f10x_conf.h": No such file or directory
-  #include <stm32f10x_conf.h>
-..\FreeModbus\modbus\ascii\mbascii.c: 0 warnings, 1 error
-"..\MDK_Output\103_0.axf" - 23 Error(s), 0 Warning(s).
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "UCHAR" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(74): error:  #20: identifier "USHORT" is undefined
+  typedef         eMBException( *pxMBFunctionHandler ) ( UCHAR * pucFrame, USHORT * pusLength );
+..\FreeModbus\modbus\include\mbproto.h(78): error:  #20: identifier "UCHAR" is undefined
+      UCHAR           ucFunctionCode;
+..\FreeModbus\modbus\ascii\mbascii.c: 0 warnings, 3 errors
+"..\MDK_Output\103_0.axf" - 85 Error(s), 14 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -144,7 +296,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.4.0
 Target not created.
-Build Time Elapsed:  00:00:02
+Build Time Elapsed:  00:00:06
 </pre>
 </body>
 </html>

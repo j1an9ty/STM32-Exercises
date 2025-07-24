@@ -28,11 +28,85 @@
 /* ----------------------- Start implementation -----------------------------*/
 void EnterCriticalSection(void)
 {
-    rt_enter_critical();
+    taskENTER_CRITICAL();
 }
 
 void ExitCriticalSection(void)
 {
-    rt_exit_critical();
+    taskEXIT_CRITICAL(); 
 }
+
+/*put  bytes in buff*/
+void Put_in_fifo(Serial_fifo *buff, uint8_t *putdata, int length) 
+{
+	portDISABLE_INTERRUPTS();
+	while (length--)
+	{
+	    buff->buffer[buff->put_index] = *putdata;
+	    buff->put_index += 1;
+	    if (buff->put_index >= FIFO_SIZE_MAX)
+	    {
+			buff->put_index = 0;
+	    }
+	    /* if the next position is read index, discard this 'read char' */
+	    if (buff->put_index == buff->get_index) 
+	    {
+			buff->get_index += 1;
+			if (buff->get_index >= FIFO_SIZE_MAX)
+			{
+				buff->get_index = 0;
+			}
+   		}
+	}
+	portENABLE_INTERRUPTS();
+}
+/*get  bytes from buff*/
+int Get_from_fifo(Serial_fifo *buff, uint8_t *getdata, int length) 
+{
+	int size = length;
+	/* read from software FIFO */
+	while (length) 
+	{
+		int ch;
+		/* disable interrupt */
+		portDISABLE_INTERRUPTS();
+		if (buff->get_index != buff->put_index)
+		{
+			ch = buff->buffer[buff->get_index];
+			buff->get_index += 1;
+			if (buff->get_index >= FIFO_SIZE_MAX)
+			{
+				buff->get_index = 0;
+			}
+		} 
+		else
+		{
+			/* no data, enable interrupt and break out */
+			portENABLE_INTERRUPTS();
+			break;
+		}
+		*getdata = ch & 0xff;
+		getdata++;
+		length--;
+		/* enable interrupt */
+		portENABLE_INTERRUPTS();
+	}
+	return size - length;
+}
+
+#ifndef IS_IRQ()
+// 声明FreeRTOS的汇编函数，用于获取中断状态寄存器值
+extern __asm uint32_t vPortGetIPSR(void); 
+
+// 内联函数：判断当前是否在中断上下文执行
+__inline bool IS_IRQ(void) 
+{
+  // 若IPSR寄存器值非0，说明当前处于中断服务程序(ISR)中
+  if (vPortGetIPSR()) 
+  {
+    return TRUE;  // 处于中断上下文
+  }
+  return FALSE;   // 处于任务上下文
+}
+#endif // MACRO
 

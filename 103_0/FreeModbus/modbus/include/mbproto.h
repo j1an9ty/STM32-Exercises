@@ -31,6 +31,8 @@
 #ifndef _MB_PROTO_H
 #define _MB_PROTO_H
 
+#include "port.h"
+
 #ifdef __cplusplus
 PR_BEGIN_EXTERN_C
 #endif
