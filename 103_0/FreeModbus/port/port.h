@@ -19,7 +19,7 @@
  * File: $Id: port.h ,v 1.60 2013/08/13 15:07:05 Armink add Master Functions $
  */
 
-#ifndef _PORT_H
+//#ifndef _PORT_H
 #define _PORT_H
 
 #include "FreeRTOS.h"
@@ -48,13 +48,13 @@
 #define EXIT_CRITICAL_SECTION()    ExitCriticalSection()
 
   /* 使用了lwrb，可能不需要 _serial_fifo*/
-typedef struct _serial_fifo
-{
-  /* software fifo */
-  volatile uint8_t *buffer;     // 指向缓冲区的指针（存储实际数据）
-  volatile uint16_t put_index;  // 写指针：指向下一个写入位置
-  volatile uint16_t get_index;  // 读指针：指向下一个读取位置
-} Serial_fifo;
+//typedef struct _serial_fifo
+//{
+//  /* software fifo */
+//  volatile uint8_t *buffer;     // 指向缓冲区的指针（存储实际数据）
+//  volatile uint16_t put_index;  // 写指针：指向下一个写入位置
+//  volatile uint16_t get_index;  // 读指针：指向下一个读取位置
+//} Serial_fifo;
 #define FIFO_SIZE_MAX 265
 
 typedef uint8_t BOOL;
@@ -80,9 +80,9 @@ void EnterCriticalSection(void);
 void ExitCriticalSection(void);
   
 /* 使用了lwrb，可能不需要以下两条 */
-void Put_in_fifo(Serial_fifo *buff, uint8_t *putdata, int length);
-int Get_from_fifo(Serial_fifo *buff, uint8_t *getdata, int length);
+//void Put_in_fifo(Serial_fifo *buff, uint8_t *putdata, int length);
+//int Get_from_fifo(Serial_fifo *buff, uint8_t *getdata, int length);
 
 extern __inline bool IS_IRQ(void); //bool报错
 
-#endif
+//#endif

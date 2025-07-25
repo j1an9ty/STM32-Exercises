@@ -17,3 +17,5 @@ readme同步：
 git add README.md
 git commit -m "日常编辑同步"
 git push -u origin main
+
+git STM32F103ZET6_TESTCODE

@@ -1,0 +1,140 @@
+Configuration	STM32F103ZET6_TESTCODE
+STM32CubeMX 	6.5.0
+Date	05/06/2022
+MCU	STM32F103ZETx
+
+
+
+PERIPHERALS	MODES	FUNCTIONS	PINS
+CAN	Activated	CAN_RX	PD0
+CAN	Activated	CAN_TX	PD1
+RCC	Crystal/Ceramic Resonator	RCC_OSC_IN	OSC_IN
+RCC	Crystal/Ceramic Resonator	RCC_OSC_OUT	OSC_OUT
+RCC	Crystal/Ceramic Resonator	RCC_OSC32_IN	PC14-OSC32_IN
+RCC	Crystal/Ceramic Resonator	RCC_OSC32_OUT	PC15-OSC32_OUT
+RTC	Activate Clock Source	RTC_VS_RTC_Activate	VP_RTC_VS_RTC_Activate
+RTC	Activate Calendar	RTC_VS_RTC_Calendar	VP_RTC_VS_RTC_Calendar
+SPI2	Full-Duplex Master	SPI2_MISO	PB14
+SPI2	Full-Duplex Master	SPI2_MOSI	PB15
+SPI2	Full-Duplex Master	SPI2_SCK	PB13
+SYS	JTAG (5 pins)	SYS_JTCK-SWCLK	PA14
+SYS	JTAG (5 pins)	SYS_JTDI	PA15
+SYS	JTAG (5 pins)	SYS_JTDO-TRACESWO	PB3
+SYS	JTAG (5 pins)	SYS_JTMS-SWDIO	PA13
+SYS	JTAG (5 pins)	SYS_NJTRST	PB4
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+USART1	Asynchronous	USART1_RX	PA10
+USART1	Asynchronous	USART1_TX	PA9
+USART2	Asynchronous	USART2_RX	PA3
+USART2	Asynchronous	USART2_TX	PA2
+USART3	Asynchronous	USART3_RX	PB11
+USART3	Asynchronous	USART3_TX	PB10
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+2	PE3	GPIO_Input	KEY1
+3	PE4	GPIO_Input	KEY0
+4	PE5	GPIO_Output	LED1
+8	PC14-OSC32_IN	RCC_OSC32_IN	
+9	PC15-OSC32_OUT	RCC_OSC32_OUT	
+23	OSC_IN	RCC_OSC_IN	
+24	OSC_OUT	RCC_OSC_OUT	
+36	PA2	USART2_TX	
+37	PA3	USART2_RX	
+69	PB10	USART3_TX	
+70	PB11	USART3_RX	
+73	PB12	GPIO_Output	F_CS
+74	PB13	SPI2_SCK	
+75	PB14	SPI2_MISO	
+76	PB15	SPI2_MOSI	
+101	PA9	USART1_TX	
+102	PA10	USART1_RX	
+105	PA13	SYS_JTMS-SWDIO	
+109	PA14	SYS_JTCK-SWCLK	
+110	PA15	SYS_JTDI	
+114	PD0	CAN_RX	
+115	PD1	CAN_TX	
+133	PB3	SYS_JTDO-TRACESWO	
+134	PB4	SYS_NJTRST	
+135	PB5	GPIO_Output	LED0
+PERIPHERALS	MODES	FUNCTIONS	PINS
+CAN	Activated	CAN_RX	PD0
+CAN	Activated	CAN_TX	PD1
+RCC	Crystal/Ceramic Resonator	RCC_OSC_IN	OSC_IN
+RCC	Crystal/Ceramic Resonator	RCC_OSC_OUT	OSC_OUT
+RCC	Crystal/Ceramic Resonator	RCC_OSC32_IN	PC14-OSC32_IN
+RCC	Crystal/Ceramic Resonator	RCC_OSC32_OUT	PC15-OSC32_OUT
+RTC	Activate Clock Source	RTC_VS_RTC_Activate	VP_RTC_VS_RTC_Activate
+RTC	Activate Calendar	RTC_VS_RTC_Calendar	VP_RTC_VS_RTC_Calendar
+SPI2	Full-Duplex Master	SPI2_MISO	PB14
+SPI2	Full-Duplex Master	SPI2_MOSI	PB15
+SPI2	Full-Duplex Master	SPI2_SCK	PB13
+SYS	JTAG (5 pins)	SYS_JTCK-SWCLK	PA14
+SYS	JTAG (5 pins)	SYS_JTDI	PA15
+SYS	JTAG (5 pins)	SYS_JTDO-TRACESWO	PB3
+SYS	JTAG (5 pins)	SYS_JTMS-SWDIO	PA13
+SYS	JTAG (5 pins)	SYS_NJTRST	PB4
+SYS	SysTick	SYS_VS_Systick	VP_SYS_VS_Systick
+USART1	Asynchronous	USART1_RX	PA10
+USART1	Asynchronous	USART1_TX	PA9
+USART2	Asynchronous	USART2_RX	PA3
+USART2	Asynchronous	USART2_TX	PA2
+USART3	Asynchronous	USART3_RX	PB11
+USART3	Asynchronous	USART3_TX	PB10
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+2	PE3	GPIO_Input	KEY1
+3	PE4	GPIO_Input	KEY0
+4	PE5	GPIO_Output	LED1
+8	PC14-OSC32_IN	RCC_OSC32_IN	
+9	PC15-OSC32_OUT	RCC_OSC32_OUT	
+23	OSC_IN	RCC_OSC_IN	
+24	OSC_OUT	RCC_OSC_OUT	
+36	PA2	USART2_TX	
+37	PA3	USART2_RX	
+69	PB10	USART3_TX	
+70	PB11	USART3_RX	
+73	PB12	GPIO_Output	F_CS
+74	PB13	SPI2_SCK	
+75	PB14	SPI2_MISO	
+76	PB15	SPI2_MOSI	
+101	PA9	USART1_TX	
+102	PA10	USART1_RX	
+105	PA13	SYS_JTMS-SWDIO	
+109	PA14	SYS_JTCK-SWCLK	
+110	PA15	SYS_JTDI	
+114	PD0	CAN_RX	
+115	PD1	CAN_TX	
+133	PB3	SYS_JTDO-TRACESWO	
+134	PB4	SYS_NJTRST	
+135	PB5	GPIO_Output	LED0
+
+
+
+SOFTWARE PROJECT
+
+Project Settings : 
+Project Name : STM32F103ZET6_TESTCODE
+Project Folder : E:\001-HESS POWERWALL\002-Code\STM32F103ZET6_TESTCODE
+Toolchain / IDE : MDK-ARM V5.32
+Firmware Package Name and Version : STM32Cube FW_F1 V1.8.4
+
+
+Code Generation Settings : 
+STM32Cube MCU packages and embedded software packs : Copy all used libraries into the project folder
+Generate peripheral initialization as a pair of '.c/.h' files per peripheral : Yes
+Backup previously generated files when re-generating : No
+Delete previously generated files when not re-generated : Yes
+Set all free pins as analog (to optimize the power consumption) : Yes
+
+
+Toolchains Settings : 
+Compiler Optimizations : 
+
+
+
+
+

@@ -49,7 +49,6 @@
 ..\mdk_output\port_1.o: ../User/inc/RS485.h
 ..\mdk_output\port_1.o: ..\FreeModbus\modbus\include\mbconfig.h
 ..\mdk_output\port_1.o: ..\FreeModbus\modbus\include\mbproto.h
-..\mdk_output\port_1.o: ..\FreeModbus\port\port.h
 ..\mdk_output\port_1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 ..\mdk_output\port_1.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 ..\mdk_output\port_1.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h

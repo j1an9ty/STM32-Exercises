@@ -50,6 +50,7 @@
 ..\mdk_output\mbcrc.o: ..\FreeModbus\modbus\include\mbconfig.h
 ..\mdk_output\mbcrc.o: ..\FreeModbus\modbus\include\mbproto.h
 ..\mdk_output\mbcrc.o: ..\FreeModbus\port\port.h
+..\mdk_output\mbcrc.o: ..\FreeModbus\modbus\include\mbproto.h
 ..\mdk_output\mbcrc.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 ..\mdk_output\mbcrc.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 ..\mdk_output\mbcrc.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
@@ -57,3 +58,4 @@
 ..\mdk_output\mbcrc.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
 ..\mdk_output\mbcrc.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 ..\mdk_output\mbcrc.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\mdk_output\mbcrc.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
