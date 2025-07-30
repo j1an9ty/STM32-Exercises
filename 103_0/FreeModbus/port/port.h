@@ -19,7 +19,7 @@
  * File: $Id: port.h ,v 1.60 2013/08/13 15:07:05 Armink add Master Functions $
  */
 
-//#ifndef _PORT_H
+#ifndef _PORT_H
 #define _PORT_H
 
 #include "FreeRTOS.h"
@@ -29,7 +29,7 @@
 #include "main.h"
 #include "usart.h"
 #include "mbconfig.h"
-#include "mbproto.h"
+//#include "mbproto.h"
 #include "semphr.h"
 #include "task.h"
 #include "timers.h"
@@ -85,4 +85,4 @@ void ExitCriticalSection(void);
 
 extern __inline bool IS_IRQ(void); //bool±¨´í
 
-//#endif
+#endif

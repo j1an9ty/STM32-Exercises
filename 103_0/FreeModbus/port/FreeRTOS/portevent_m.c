@@ -29,50 +29,64 @@
 
 /* ----------------------- Defines ------------------------------------------*/
 /* ----------------------- Variables ----------------------------------------*/
-static struct SemaphoreHandle_t  xMasterRunRes;			 //信号量
-static struct EventGroupHandle_t xMasterOsEvent; //事件
+static SemaphoreHandle_t  xMasterRunRes; //信号量
+static EventGroupHandle_t xMasterOsEvent;//事件组
 /* ----------------------- Start implementation -----------------------------*/
 BOOL
 xMBMasterPortEventInit( void )
 {
-    rt_event_init(&xMasterOsEvent,"master event",RT_IPC_FLAG_PRIO);
+    /*rt_event_init(&xMasterOsEvent,"master event",RT_IPC_FLAG_PRIO);*/
+		xMasterOsEvent = xEventGroupCreate(); //创建事件组
+		if (xMasterOsEvent == NULL)
+		{
+			return FALSE;
+		}
     return TRUE;
 }
 
 BOOL
 xMBMasterPortEventPost( eMBMasterEventType eEvent )
 {
-    rt_event_send(&xMasterOsEvent, eEvent);
+    BaseType_t xHigherPriorityTaskWoken;/*rt_event_send(&xMasterOsEvent, eEvent);*/
+		if (IS_IRQ()) 
+		{
+			xEventGroupSetBitsFromISR(xMasterOsEvent, eEvent, &xHigherPriorityTaskWoken);
+		} 
+		else{
+			xEventGroupSetBits(xMasterOsEvent,eEvent);//设置事件标志
+		}
     return TRUE;
 }
 
 BOOL
-xMBMasterPortEventGet( eMBMasterEventType * eEvent )
+xMBMasterPortEventGet( eMBMasterEventType * peEventStore )//获得事件，存到* peEventStore
 {
-    rt_uint32_t recvedEvent;
+    EventBits_t uxRecvedEvent;/*rt_uint32_t recvedEvent;*/
     /* waiting forever OS event */
-    rt_event_recv(&xMasterOsEvent,
-            EV_MASTER_READY | EV_MASTER_FRAME_RECEIVED | EV_MASTER_EXECUTE |
-            EV_MASTER_FRAME_SENT | EV_MASTER_ERROR_PROCESS,
-            RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER,
-            &recvedEvent);
+		uxRecvedEvent = xEventGroupWaitBits(xMasterOsEvent,//句柄
+										EV_MASTER_READY | EV_MASTER_FRAME_RECEIVED | EV_MASTER_EXECUTE |
+										EV_MASTER_FRAME_SENT | EV_MASTER_ERROR_PROCESS,//等待的事件
+										pdTRUE,					//退出时清除事件标志
+										pdFALSE,				//满足其中一个事件就退出
+										portMAX_DELAY); //指定超时事件,无限等待
+
     /* the enum type couldn't convert to int type */
-    switch (recvedEvent)
+    switch (uxRecvedEvent)
     {
     case EV_MASTER_READY:
-        *eEvent = EV_MASTER_READY;
+        *peEventStore = EV_MASTER_READY;
         break;
     case EV_MASTER_FRAME_RECEIVED:
-        *eEvent = EV_MASTER_FRAME_RECEIVED;
+        *peEventStore = EV_MASTER_FRAME_RECEIVED;
         break;
     case EV_MASTER_EXECUTE:
-        *eEvent = EV_MASTER_EXECUTE;
+        *peEventStore = EV_MASTER_EXECUTE;
         break;
     case EV_MASTER_FRAME_SENT:
-        *eEvent = EV_MASTER_FRAME_SENT;
+        *peEventStore = EV_MASTER_FRAME_SENT;
         break;
     case EV_MASTER_ERROR_PROCESS:
-        *eEvent = EV_MASTER_ERROR_PROCESS;
+        *peEventStore = EV_MASTER_ERROR_PROCESS;
         break;
     }
     return TRUE;
@@ -82,9 +96,9 @@ xMBMasterPortEventGet( eMBMasterEventType * eEvent )
  * Note:The resource is define by OS.If you not use OS this function can be empty.
  *
  */
-void vMBMasterOsResInit( void )
+void vMBMasterOsResInit( void )//初始化主机需要的互斥资源
 {
-    rt_sem_init(&xMasterRunRes, "master res", 0x01 , RT_IPC_FLAG_PRIO);
+    xMasterRunRes = xSemaphoreCreateBinary();	//*创建二值信号量，刚创建为空，获取不到*/
 }
 
 /**
@@ -95,10 +109,14 @@ void vMBMasterOsResInit( void )
  *
  * @return resource taked result
  */
-BOOL xMBMasterRunResTake( LONG lTimeOut )
+BOOL xMBMasterRunResTake( LONG lTimeOut )//获得主机运行的互斥资源
 {
     /*If waiting time is -1 .It will wait forever */
-    return rt_sem_take(&xMasterRunRes, lTimeOut) ? FALSE : TRUE ;
+  if (lTimeOut == -1) //在很多系统和库（包括 FreeRTOS、标准 C 库）中，-1 被广泛用作 无超时，永久等待的标志：
+	{
+		return xSemaphoreTake(xMasterRunRes, portMAX_DELAY); //*获取二值信号量*/
+	}
+	return xSemaphoreTake(xMasterRunRes, lTimeOut);
 }
 
 /**
@@ -106,10 +124,10 @@ BOOL xMBMasterRunResTake( LONG lTimeOut )
  * Note:The resource is define by Operating System.If you not use OS this function can be empty.
  *
  */
-void vMBMasterRunResRelease( void )
+void vMBMasterRunResRelease( void )//释放互斥资源
 {
     /* release resource */
-    rt_sem_release(&xMasterRunRes);
+    xSemaphoreGive(xMasterRunRes);/*rt_sem_release(&xMasterRunRes);*/
 }
 
 /**
@@ -122,13 +140,13 @@ void vMBMasterRunResRelease( void )
  * @param ucPDULength PDU buffer length
  *
  */
-void vMBMasterErrorCBRespondTimeout(UCHAR ucDestAddress, const UCHAR* pucPDUData,
+void vMBMasterErrorCBRespondTimeout(UCHAR ucDestAddress, const UCHAR* pucPDUData, //主站报错回调-超时
         USHORT ucPDULength) {
     /**
      * @note This code is use OS's event mechanism for modbus master protocol stack.
      * If you don't use OS, you can change it.
      */
-    rt_event_send(&xMasterOsEvent, EV_MASTER_ERROR_RESPOND_TIMEOUT);
+    xEventGroupSetBits(xMasterOsEvent, EV_MASTER_ERROR_RESPOND_TIMEOUT);/*rt_event_send(&xMasterOsEvent, EV_MASTER_ERROR_RESPOND_TIMEOUT);*/
 
     /* You can add your code under here. */
 
@@ -144,13 +162,13 @@ void vMBMasterErrorCBRespondTimeout(UCHAR ucDestAddress, const UCHAR* pucPDUData
  * @param ucPDULength PDU buffer length
  *
  */
-void vMBMasterErrorCBReceiveData(UCHAR ucDestAddress, const UCHAR* pucPDUData,
+void vMBMasterErrorCBReceiveData(UCHAR ucDestAddress, const UCHAR* pucPDUData,//主站报错回调-接收错误
         USHORT ucPDULength) {
     /**
      * @note This code is use OS's event mechanism for modbus master protocol stack.
      * If you don't use OS, you can change it.
      */
-    rt_event_send(&xMasterOsEvent, EV_MASTER_ERROR_RECEIVE_DATA);
+    xEventGroupSetBits(xMasterOsEvent, EV_MASTER_ERROR_RECEIVE_DATA);
 
     /* You can add your code under here. */
 
@@ -166,13 +184,13 @@ void vMBMasterErrorCBReceiveData(UCHAR ucDestAddress, const UCHAR* pucPDUData,
  * @param ucPDULength PDU buffer length
  *
  */
-void vMBMasterErrorCBExecuteFunction(UCHAR ucDestAddress, const UCHAR* pucPDUData,
+void vMBMasterErrorCBExecuteFunction(UCHAR ucDestAddress, const UCHAR* pucPDUData,//主站报错回调-执行错误
         USHORT ucPDULength) {
     /**
      * @note This code is use OS's event mechanism for modbus master protocol stack.
      * If you don't use OS, you can change it.
      */
-    rt_event_send(&xMasterOsEvent, EV_MASTER_ERROR_EXECUTE_FUNCTION);
+    xEventGroupSetBits(xMasterOsEvent, EV_MASTER_ERROR_EXECUTE_FUNCTION);
 
     /* You can add your code under here. */
 
@@ -184,12 +202,12 @@ void vMBMasterErrorCBExecuteFunction(UCHAR ucDestAddress, const UCHAR* pucPDUDat
  * So,for real-time of system.Do not execute too much waiting process.
  *
  */
-void vMBMasterCBRequestScuuess( void ) {
+void vMBMasterCBRequestScuuess( void ) { //主站回调-请求成功
     /**
      * @note This code is use OS's event mechanism for modbus master protocol stack.
      * If you don't use OS, you can change it.
      */
-    rt_event_send(&xMasterOsEvent, EV_MASTER_PROCESS_SUCESS);
+    xEventGroupSetBits(xMasterOsEvent, EV_MASTER_PROCESS_SUCESS);
 
     /* You can add your code under here. */
 
@@ -204,17 +222,17 @@ void vMBMasterCBRequestScuuess( void ) {
  *
  * @return request error code
  */
-eMBMasterReqErrCode eMBMasterWaitRequestFinish( void ) {
+eMBMasterReqErrCode eMBMasterWaitRequestFinish( void ) { //wait for modbus master request finish
     eMBMasterReqErrCode    eErrStatus = MB_MRE_NO_ERR;
-    rt_uint32_t recvedEvent;
-    /* waiting for OS event */
-    rt_event_recv(&xMasterOsEvent,
-            EV_MASTER_PROCESS_SUCESS | EV_MASTER_ERROR_RESPOND_TIMEOUT
-                    | EV_MASTER_ERROR_RECEIVE_DATA
-                    | EV_MASTER_ERROR_EXECUTE_FUNCTION,
-            RT_EVENT_FLAG_OR | RT_EVENT_FLAG_CLEAR, RT_WAITING_FOREVER,
-            &recvedEvent);
-    switch (recvedEvent)
+    EventBits_t uxRecvedEvent;/*rt_uint32_t recvedEvent;*/
+    /* waiting forever OS event */
+		uxRecvedEvent = xEventGroupWaitBits(xMasterOsEvent,//句柄
+										EV_MASTER_PROCESS_SUCESS | EV_MASTER_ERROR_RESPOND_TIMEOUT | EV_MASTER_ERROR_RECEIVE_DATA |
+										EV_MASTER_ERROR_EXECUTE_FUNCTION,//等待的事件
+										pdTRUE,					//退出时清除事件标志
+										pdFALSE,				//满足其中一个事件就退出
+										portMAX_DELAY); //指定超时事件,无限等待
+    switch (uxRecvedEvent)
     {
     case EV_MASTER_PROCESS_SUCESS:
         break;
@@ -236,7 +254,7 @@ eMBMasterReqErrCode eMBMasterWaitRequestFinish( void ) {
     }
     return eErrStatus;
 }
-
+#endif
 
 #if 0
 /* ----------------------- Defines ------------------------------------------*/
@@ -450,4 +468,4 @@ eMBMasterReqErrCode eMBMasterWaitRequestFinish( void ) {
 }
 
 #endif
-#endif
+
