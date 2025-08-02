@@ -15,7 +15,9 @@ git push -u origin main
 
 readme同步：
 git add README.md
-git commit -m "日常编辑同步"
+git commit -m "加git pull"
 git push -u origin main
 
-git STM32F103ZET6_TESTCODE
+git add STM32F103ZET6_TESTCODE
+
+git pull
