@@ -147,11 +147,11 @@ void vMBMasterPortTimersDisable()
 {
 	if (IS_IRQ()) 
 	{
-		xTimerStopFromISR((TimerHandle_t)timer, 0);
+		xTimerStopFromISR((TimerHandle_t)MBMastertimer, 0);
 	} 
 	else 
 	{
-		xTimerStop((TimerHandle_t)timer, 0);
+		xTimerStop((TimerHandle_t)MBMastertimer, 0);
 	}
 }
 
@@ -160,7 +160,7 @@ void prvvTIMERExpiredISR(void)
     (void) pxMBMasterPortCBTimerExpired();
 }
 
-static void timer_timeout_ind(void* parameter)
+static void timer_timeout_ind(TimerHandle_t xTimer)
 {
     prvvTIMERExpiredISR();
 }

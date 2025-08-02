@@ -94,7 +94,7 @@ BOOL xMBMasterPortSerialInit(UCHAR ucPORT, ULONG ulBaudRate, UCHAR ucDataBits,	/
 	/*registe recieve callback*/
 //	HAL_UART_RegisterCallback(serial, HAL_UART_RX_COMPLETE_CB_ID, Master_RxCpltCallback);
 	/* software initialize */
-	lwrb_init(Master_serial_rx_fifo,rx_buff,sizeof(rx_buff));				//初始化缓冲区句柄
+	lwrb_init(&Master_serial_rx_fifo,(void*)rx_buff,sizeof(rx_buff));				//初始化缓冲区句柄
 
 	/* software initialize */
 
@@ -215,11 +215,11 @@ static void serial_soft_trans_irq(void* parameter) {											//模拟发送中断
     while (1) 
     {
         /* 等待串口发送启动事件 */
-        xEventGroupWaitBits(event_serial,             /* 事件组句柄 */
-                            EVENT_SERIAL_TRANS_START, /* 等待设置的事件位 */
-                            pdFALSE,        /* 不自动清除等待的事件位 */
-                            pdFALSE,        /* 任意一个事件位被设置即可唤醒 */
-                            portMAX_DELAY); /* 无限等待，直到事件发生 */
+        xEventGroupWaitBits(event_serial,             //* 事件组句柄 */
+                            EVENT_SERIAL_TRANS_START, //* 等待设置的事件位 */
+                            pdFALSE,        //* 不自动清除等待的事件位 */
+                            pdFALSE,        //* 任意一个事件位被设置即可唤醒 */
+                            portMAX_DELAY); //* 无限等待，直到事件发生 */
         
         /* 事件发生后，执行Modbus发送回调函数 */													//获得标记后发送
 			prvvUARTTxReadyISR();
@@ -231,35 +231,35 @@ static void serial_soft_trans_irq(void* parameter) {											//模拟发送中断
  * @param  huart  Pointer to a UART_HandleTypeDef structure that contains
  *                the configuration information for the specified UART module.
  * @retval None
+*/
+//UART硬件接收到数据 → 触发接收中断 →
+//HAL库中断处理函数 → Master_RxCpltCallback() →
+//  ├─ 循环读取所有可用字节 → 存入Master_serial_rx_fifo
+//  └─ 调用prvvUARTRxISR() →
+//      └─ 调用pxMBMasterFrameCBByteReceived() →
+//          └─ 协议栈通过xMBPortSerialGetByte()读取数据
 
-UART硬件接收到数据 → 触发接收中断 →
-HAL库中断处理函数 → Master_RxCpltCallback() →
-  ├─ 循环读取所有可用字节 → 存入Master_serial_rx_fifo
-  └─ 调用prvvUARTRxISR() →
-      └─ 调用pxMBMasterFrameCBByteReceived() →
-          └─ 协议栈通过xMBPortSerialGetByte()读取数据
-
- */
+ 
 void Master_RxCpltCallback(struct __UART_HandleTypeDef *huart) 
 {
 	int ch = -1;
 	
 	while (1) 
 	{
-		ch = stm32_getc();
+		ch = stm32_getc();               //没有接收则返回-1
 		if (ch == -1)
 		{
 			break;
 		}
-		lwrb_write(&Master_serial_rx_fifo, (uint8_t *)&ch, 1);
+		lwrb_write(&Master_serial_rx_fifo, (uint8_t *)&ch, 1); //将接收的字节写入Master_serial_rx_fifo
 	}
-	prvvUARTRxISR();
+	prvvUARTRxISR(); //最终调用xMBPortSerialGetByte()
 }
 
 static int stm32_putc(CHAR c) 
 {
 	serial->Instance->DR = c;
-	while (!(serial->Instance->SR & UART_FLAG_TC));
+	while (!(serial->Instance->SR & UART_FLAG_TC));//发送完成（直到寄存器Status Register的TC标志位被置位）
 	return TRUE;
 }
 
@@ -267,9 +267,9 @@ static int stm32_getc(void)
 {
 	int ch;
 	ch = -1;
-	if (serial->Instance->SR & UART_FLAG_RXNE) 
+	if (serial->Instance->SR & UART_FLAG_RXNE) //RXNE接收非空
 	{
-		ch = serial->Instance->DR & 0xff;
+		ch = serial->Instance->DR & 0xff; //通过&0xff取低 8 位（若将ch定义为uint8_t，可自动截断，省略&0xff）
 	}
 	return ch;
 }

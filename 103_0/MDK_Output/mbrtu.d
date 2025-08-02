@@ -50,8 +50,6 @@
 ..\mdk_output\mbrtu.o: ../Core/Inc/usart.h
 ..\mdk_output\mbrtu.o: ../User/inc/RS485.h
 ..\mdk_output\mbrtu.o: ..\FreeModbus\modbus\include\mbconfig.h
-..\mdk_output\mbrtu.o: ..\FreeModbus\modbus\include\mbproto.h
-..\mdk_output\mbrtu.o: ..\FreeModbus\port\port.h
 ..\mdk_output\mbrtu.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 ..\mdk_output\mbrtu.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 ..\mdk_output\mbrtu.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
@@ -61,6 +59,7 @@
 ..\mdk_output\mbrtu.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\mdk_output\mbrtu.o: ..\FreeModbus\modbus\include\mb.h
 ..\mdk_output\mbrtu.o: ..\FreeModbus\modbus\include\mbport.h
+..\mdk_output\mbrtu.o: ..\FreeModbus\modbus\include\mbproto.h
 ..\mdk_output\mbrtu.o: ..\FreeModbus\modbus\rtu\mbrtu.h
 ..\mdk_output\mbrtu.o: ..\FreeModbus\modbus\include\mbframe.h
 ..\mdk_output\mbrtu.o: ..\FreeModbus\modbus\rtu\mbcrc.h

@@ -1,6 +1,0 @@
---c99 -c --cpu Cortex-M3 -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc -I ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I ../Middlewares/Third_Party/FreeRTOS/Source/include -I ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3 -I ../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I ../Drivers/CMSIS/Include -I ../User/inc -I ..\FreeModbus\port -I ..\FreeModbus\modbus\include -I ..\FreeModbus\modbus\rtu -I ..\Middlewares\lwrb
--I.\RTE\_103_0
--IF:\Keil_v5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include
--IF:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include
--D__UVISION_VERSION="533" -D_RTE_ -DSTM32F10X_HD -D_RTE_ -DUSE_HAL_DRIVER -DSTM32F103xE
--o ..\mdk_output\portevent_m.o --omf_browse ..\mdk_output\portevent_m.crf --depend ..\mdk_output\portevent_m.d "..\FreeModbus\port\FreeRTOS\portevent_m.c"

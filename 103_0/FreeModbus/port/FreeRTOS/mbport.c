@@ -37,7 +37,7 @@ void ExitCriticalSection(void)
 }
 
 /*put  bytes in buff*/
-//void Put_in_fifo(Serial_fifo *buff, uint8_t *putdata, int length) 
+//void Put_in_fifo(Serial_fifo *buff, uint8_t *putdata, int length) //应该用不到
 //{
 //	portDISABLE_INTERRUPTS();
 //	while (length--)
@@ -94,7 +94,7 @@ void ExitCriticalSection(void)
 //	return size - length;
 //}
 
-#ifndef IS_IRQ()
+#ifndef IS_IRQ
 // 声明FreeRTOS的汇编函数，用于获取中断状态寄存器值
 extern __asm uint32_t vPortGetIPSR(void); 
 

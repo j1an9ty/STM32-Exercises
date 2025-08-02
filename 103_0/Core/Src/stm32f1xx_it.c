@@ -31,7 +31,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define USING_UART2
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -46,7 +46,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN PFP */
-
+extern void Master_RxCpltCallback(struct __UART_HandleTypeDef *huart);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -171,7 +171,13 @@ void USART1_IRQHandler(void)
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
-
+	#if defined USING_UART1
+	if (__HAL_UART_GET_FLAG(&huart1, UART_FLAG_RXNE))
+	{
+		Master_RxCpltCallback(&huart1);
+		__HAL_UART_CLEAR_FLAG(&huart1, UART_FLAG_RXNE);
+	}
+	#endif
   /* USER CODE END USART1_IRQn 1 */
 }
 
@@ -185,7 +191,23 @@ void USART2_IRQHandler(void)
   /* USER CODE END USART2_IRQn 0 */
   HAL_UART_IRQHandler(&huart2);
   /* USER CODE BEGIN USART2_IRQn 1 */
-
+	#if defined USING_UART2
+	if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_RXNE))
+	{
+		Master_RxCpltCallback(&huart2);
+//		HAL_UART_IRQHandler(&huart2);//豆包建议保留，放在最前面
+		//__HAL_UART_CLEAR_FLAG(&huart2, UART_FLAG_RXNE);//RXNE 是只读标志（硬件自动置位），无法软件写入
+	}
+	if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_ORE))
+	{
+		uint16_t pucByte = (uint16_t)((&huart2)->Instance->DR & (uint16_t)0x01FF);//可能有通过读数据清除错误标志的作用
+		__HAL_UART_CLEAR_OREFLAG(&huart2);
+	}
+	if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_TC))
+	{
+		__HAL_UART_CLEAR_FLAG(&huart2, UART_FLAG_TC);
+	}
+	#endif
   /* USER CODE END USART2_IRQn 1 */
 }
 

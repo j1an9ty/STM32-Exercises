@@ -50,8 +50,6 @@
 ..\mdk_output\user_mb_app.o: ../Core/Inc/usart.h
 ..\mdk_output\user_mb_app.o: ../User/inc/RS485.h
 ..\mdk_output\user_mb_app.o: ..\FreeModbus\modbus\include\mbconfig.h
-..\mdk_output\user_mb_app.o: ..\FreeModbus\modbus\include\mbproto.h
-..\mdk_output\user_mb_app.o: ..\FreeModbus\port\port.h
 ..\mdk_output\user_mb_app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 ..\mdk_output\user_mb_app.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 ..\mdk_output\user_mb_app.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\assert.h
@@ -60,6 +58,7 @@
 ..\mdk_output\user_mb_app.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
 ..\mdk_output\user_mb_app.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\mdk_output\user_mb_app.o: ..\FreeModbus\modbus\include\mbport.h
+..\mdk_output\user_mb_app.o: ..\FreeModbus\modbus\include\mbproto.h
 ..\mdk_output\user_mb_app.o: ..\FreeModbus\modbus\include\mb_m.h
 ..\mdk_output\user_mb_app.o: ..\FreeModbus\modbus\include\mbframe.h
 ..\mdk_output\user_mb_app.o: ..\FreeModbus\modbus\include\mbutils.h
