@@ -1,0 +1,12 @@
+..\mdk_output\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/list.c
+..\mdk_output\list.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+..\mdk_output\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+..\mdk_output\list.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+..\mdk_output\list.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\mdk_output\list.o: ../Core/Inc/FreeRTOSConfig.h
+..\mdk_output\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+..\mdk_output\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+..\mdk_output\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+..\mdk_output\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+..\mdk_output\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+..\mdk_output\list.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h

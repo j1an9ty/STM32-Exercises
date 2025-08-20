@@ -19,8 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
-#include "usart.h"
-#include "gpio.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -53,7 +52,7 @@ void SystemClock_Config(void);
 static void MPU_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
-
+void relay1_open(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -96,13 +95,7 @@ int main(void)
   MX_USART3_UART_Init();
   MX_UART8_Init();
   /* USER CODE BEGIN 2 */
-	uint8_t date485_3[]="485_3";
-	uint8_t date485_5[]="485_5";
-	uint8_t tx3_len;
-	uint8_t tx5_len;
-	
-	tx3_len= sizeof (date485_3);
-	tx5_len= sizeof (date485_3);
+
 
   /* USER CODE END 2 */
 
@@ -121,13 +114,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		
-		HAL_GPIO_WritePin (CON3_485_GPIO_Port,CON3_485_Pin,GPIO_PIN_SET );
-		HAL_UART_Transmit_IT (&huart3,date485_3,tx3_len );
-		
-		HAL_UART_Transmit_IT (&huart8,date485_5,tx5_len );
-		
-		HAL_Delay (500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

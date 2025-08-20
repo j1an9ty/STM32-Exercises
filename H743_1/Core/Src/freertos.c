@@ -57,6 +57,39 @@ const osThreadAttr_t defaultTask_attributes = {
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
+void relay1_open(){
+		HAL_GPIO_WritePin (CON_RELAY1_GPIO_Port,CON_RELAY1_Pin,GPIO_PIN_SET );
+		HAL_GPIO_TogglePin (COM_LED_GPIO_Port,COM_LED_Pin );
+}
+
+void relay1_close(){
+		HAL_GPIO_WritePin (CON_RELAY1_GPIO_Port,CON_RELAY1_Pin,GPIO_PIN_RESET );
+}
+
+void UART_SendChar(uint8_t ch)
+{
+    // 发送一个字节数据
+    HAL_UART_Transmit(&huart3, &ch, 1, 0xFFFF);
+}
+
+/**
+ * @brief  发送字符串到串口
+ * @param  str: 要发送的字符串指针
+ * @retval None
+ */
+void UART_SendString(const char *str)
+{
+    // 检查字符串是否为空
+    if(str == NULL)
+        return;
+    
+    // 循环发送字符串中的每个字符，直到遇到结束符'\0'
+    while(*str != '\0')
+    {
+        UART_SendChar((uint8_t)*str);
+        str++;
+    }
+}
 
 /* USER CODE END FunctionPrototypes */
 
@@ -114,10 +147,36 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
+	uint8_t In1;
+	uint8_t flag_coil_relaxes=1;
+
   /* Infinite loop */
   for(;;)
-  {
-    osDelay(1);
+  {	
+		HAL_GPIO_WritePin (CON3_485_GPIO_Port,CON3_485_Pin,GPIO_PIN_SET );
+		
+		if (flag_coil_relaxes){
+			relay1_open();
+			UART_SendString("吸合");
+			//HAL_UART_Transmit_IT (&huart3,message_pull_in,sizeof (message_pull_in) );
+			flag_coil_relaxes=0;
+		}
+		
+		HAL_Delay (2000);
+		In1 = !HAL_GPIO_ReadPin(IO_IN1_GPIO_Port, IO_IN1_Pin);
+		if (In1){
+		  relay1_close();
+			UART_SendString("松开");
+			flag_coil_relaxes=1;
+		}
+		else {
+			UART_SendString("没有反馈");
+			flag_coil_relaxes=0;
+		}
+		HAL_GPIO_TogglePin (RUN_LED_GPIO_Port,RUN_LED_Pin );
+
+		HAL_Delay (5000);
+		osDelay(1);
   }
   /* USER CODE END StartDefaultTask */
 }

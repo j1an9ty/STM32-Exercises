@@ -21,3 +21,8 @@ git push -u origin main
 git add STM32F103ZET6_TESTCODE
 
 git pull
+
+0820
+git add H743_1 README.md
+git commit -m "加测二次连接器"
+git push -u origin main
