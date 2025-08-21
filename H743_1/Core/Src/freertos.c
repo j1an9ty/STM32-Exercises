@@ -22,6 +22,7 @@
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
+#include <stdio.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -45,7 +46,8 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-
+	uint8_t In2;
+	uint8_t test_start;
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -91,6 +93,9 @@ void UART_SendString(const char *str)
     }
 }
 
+void In2_GetRisingEdge(void *pvParameters);   // 任务函数声明
+
+
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
@@ -129,6 +134,15 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+	// 参数：任务函数、名字、堆栈深度、参数、优先级、句柄
+	xTaskCreate(
+			In2_GetRisingEdge,           // 任务函数
+			"ReadInSignal_task",          // 任务名，调试用
+			128,                 // 堆栈深度（单位 word，STM32 一个 word 4 字节）
+			NULL,                // 传给任务函数的参数
+			tskIDLE_PRIORITY+1,  // 优先级
+			NULL                 // 任务句柄，不需要可给 NULL
+	);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -149,40 +163,77 @@ void StartDefaultTask(void *argument)
   /* USER CODE BEGIN StartDefaultTask */
 	uint8_t In1;
 	uint8_t flag_coil_relaxes=1;
-
+	uint8_t test_count=0;
+	char buffer_count[16];
+	
+	HAL_GPIO_WritePin (CON3_485_GPIO_Port,CON3_485_Pin,GPIO_PIN_SET );//开启485发送引脚
   /* Infinite loop */
   for(;;)
-  {	
-		HAL_GPIO_WritePin (CON3_485_GPIO_Port,CON3_485_Pin,GPIO_PIN_SET );
-		
-		if (flag_coil_relaxes){
-			relay1_open();
-			UART_SendString("吸合");
-			//HAL_UART_Transmit_IT (&huart3,message_pull_in,sizeof (message_pull_in) );
-			flag_coil_relaxes=0;
-		}
-		
-		HAL_Delay (2000);
-		In1 = !HAL_GPIO_ReadPin(IO_IN1_GPIO_Port, IO_IN1_Pin);
-		if (In1){
-		  relay1_close();
-			UART_SendString("松开");
-			flag_coil_relaxes=1;
-		}
-		else {
-			UART_SendString("没有反馈");
-			flag_coil_relaxes=0;
-		}
-		HAL_GPIO_TogglePin (RUN_LED_GPIO_Port,RUN_LED_Pin );
+  {					
+		if (test_start){					
 
-		HAL_Delay (5000);
-		osDelay(1);
+				
+				if (flag_coil_relaxes){
+						relay1_open();
+						UART_SendString("吸合");
+						flag_coil_relaxes=0;
+						test_count++;
+						sprintf (buffer_count,"%d",test_count);
+						UART_SendString(buffer_count);
+				}
+				
+				HAL_Delay (2000);
+				In1 = !HAL_GPIO_ReadPin(IO_IN1_GPIO_Port, IO_IN1_Pin);
+				if (In1){
+						relay1_close();
+						UART_SendString("松开");
+						flag_coil_relaxes=1;
+				}
+				else {
+						UART_SendString("没有反馈");
+						flag_coil_relaxes=0;
+				}
+				
+				HAL_GPIO_TogglePin (RUN_LED_GPIO_Port,RUN_LED_Pin );
+		}	
+		else 
+		{
+				test_count=0;
+				UART_SendString("测试未开始，IN2短接10ms开始测试");
+		}
+
+		osDelay (5000);
   }
   /* USER CODE END StartDefaultTask */
 }
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-
+//读上升沿？
+void In2_GetRisingEdge(void *pvParameters){
+  for(;;)
+  {	
+			In2 = !HAL_GPIO_ReadPin(IO_IN2_GPIO_Port, IO_IN2_Pin);	
+			if (In2){
+				osDelay (10);
+				
+				In2 = !HAL_GPIO_ReadPin(IO_IN2_GPIO_Port, IO_IN2_Pin);
+				if(!In2){
+					
+					if(test_start ) {
+						test_start=0;
+						UART_SendString("停止测试");
+					}
+					
+					else {
+						test_start=1;
+						UART_SendString("开始测试");
+					}
+				}
+				
+			}
+			osDelay (1);	
+	}
+}
 /* USER CODE END Application */
 

@@ -50,3 +50,4 @@
 ..\mdk_output\freertos.o: ../Core/Inc/gpio.h
 ..\mdk_output\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 ..\mdk_output\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
+..\mdk_output\freertos.o: F:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

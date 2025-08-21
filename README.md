@@ -26,3 +26,8 @@ git pull
 git add H743_1 README.md
 git commit -m "加测二次连接器"
 git push -u origin main
+
+0821
+git add H743_1 README.md
+git commit -m "二次连接器循环测试架开始停止功能"
+git push -u origin main
